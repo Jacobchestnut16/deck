@@ -52,6 +52,6 @@ echo "Local Network IP address: $local_ip";
 
 
 searchNetwork('192.168.46');
-searchNetwork('172.183.16');
+searchNetwork('172.16.183');
 
 ?>
