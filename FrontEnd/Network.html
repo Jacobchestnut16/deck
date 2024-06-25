@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Network</title>
+    <script>
+        var eventSource = new EventSource('scan.php');
+
+        eventSource.onmessage = function(event) {
+            var resultsDiv = document.getElementById('scanResults');
+            resultsDiv.innerHTML += event.data + "<br>";
+        };
+
+        eventSource.onerror = function(error) {
+            console.error("EventSource failed:", error);
+        };
+
+        function startScan() {
+            var startButton = document.getElementById('startScan');
+            startButton.disabled = true;
+            startButton.textContent = "Scanning...";
+
+            // Send a signal to start the scan
+            fetch('BackEnd/Network.php')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    console.log('Scan started successfully');
+                })
+                .catch(error => {
+                    console.error('Error starting scan:', error);
+                });
+        }
+    </script>
+</head>
+<body>
+<button id="startScan" onclick="startScan()">Start Scan</button>
+<div id="scanResults"></div>
+</body>
+</html>
