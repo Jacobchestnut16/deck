@@ -7,11 +7,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ip'])) {
     exec($cmd, $output, $status);
 
     if ($status === 0) {
-        $result = "$ip UP";
+        $result = "up";
         $response = ['status' => 'success', 'result' => $result];
     } else {
-        $result = "$ip DOWN";
-        $response = ['status' => 'error', 'result' => $result];
+        $result = "down";
+        $response = ['status' => 'error', 'result' => $result, 'ip' => $ip];
     }
 
     // Send JSON response

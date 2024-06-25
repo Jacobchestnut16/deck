@@ -29,6 +29,8 @@
 
                     // Handle each request as it completes
                     request.done(function(data) {
+                        document.getElementById(data.ip).className = data.result
+
                         if (data.status === 'success') {
                             resultsDiv.append("<p>" + data.result + "</p>");
                         } else {
@@ -53,7 +55,8 @@
         echo "<tr>";
         for ($j = 0; $j < 17; $j++) {
             echo "<td>";
-            echo "172.16.183".(($i*$j) + 1);
+            echo "<div id='172.16.183.".(($i*$j) + 1)."' class='down'>";
+            echo "172.16.183.".(($i*$j) + 1);
         }
         echo "</tr>";
     }
@@ -63,10 +66,19 @@
 <div id="scanResults"></div>
 <style>
     .up{
-        background: forestgreen;
+        background-color: rgba(50,150,46,40%);
     }
     .down{
-        background: indianred;
+        background-color: rgba(250,100,146,40%);
+    }
+    table{
+        width: 100%;
+    }
+    tr{
+        width: 100%;
+    }
+    td{
+        border: black 1px solid;
     }
 </style>
 </body>
