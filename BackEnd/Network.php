@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ip'])) {
 
     if ($status === 0) {
         $result = "up";
-        $response = ['status' => 'success', 'result' => $result];
+        $response = ['status' => 'success', 'result' => $result, 'ip' => $ip];
     } else {
         $result = "down";
         $response = ['status' => 'error', 'result' => $result, 'ip' => $ip];

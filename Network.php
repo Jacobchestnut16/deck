@@ -30,12 +30,13 @@
                     // Handle each request as it completes
                     request.done(function(data) {
                         document.getElementById(data.ip).className = data.result
+                        resultsDiv.append(data.ip +data.result + "</br>")
 
-                        if (data.status === 'success') {
-                            resultsDiv.append("<p>" + data.result + "</p>");
-                        } else {
-                            resultsDiv.append("<p>" + data.result + "</p>");
-                        }
+                        // if (data.status === 'up') {
+                        //     resultsDiv.append("<p>" + data.result + "</p>");
+                        // } else {
+                        //     resultsDiv.append("<p>" + data.result + "</p>");
+                        // }
                     });
                 }
 
