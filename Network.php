@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Network Scanner</title>
+    <link rel="stylesheet" href="main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         function f() {
@@ -105,7 +106,7 @@
     </script>
 </head>
 <body onload="f()" background="download.jpg">
-<button><a href="index.html">Home</a></button>
+<a href="index.html">Home</a>
 <table>
     <?php
     $ending = 0;
