@@ -2,6 +2,9 @@
 function pingDevice($ip) {
     $cmd = "/bin/ping -c 1 $ip"; // Linux example
     exec($cmd, $output, $result);
+    foreach ($output as $line) {
+        echo $ip." ".$line;
+    }
     if ($result == 0) {
         return true; // Device is up
     } else {
@@ -16,9 +19,9 @@ function searchNetwork($ip)
         $ipLookup = $ip . '.' . $i;
         echo "<td>";
         if (pingDevice($ipLookup)) {
-            echo "Device at $ipLookup is up.";
+            //echo "Device at $ipLookup is up.";
         } else {
-            echo "Device at $ipLookup is down.";
+            //echo "Device at $ipLookup is down.";
         }
         echo "</td>";
         $hostname = gethostbyaddr($ip);
@@ -51,7 +54,7 @@ $local_ip = getLocalNetworkIP();
 echo "Local Network IP address: $local_ip";
 
 
-searchNetwork('192.168.46');
+//searchNetwork('192.168.46');
 searchNetwork('172.16.183');
 
 ?>
