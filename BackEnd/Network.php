@@ -1,33 +1,21 @@
 <?php
-// scan.php
+// ping.php
 
-header("Content-Type: text/event-stream");
-header("Cache-Control: no-cache");
-header("Connection: keep-alive");
-
-function ping($host)
-{
-    $cmd = "sudo ping -c 1 " . escapeshellarg($host);
-    $output = [];
-    $status = 0;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ip'])) {
+    $ip = $_POST['ip'];
+    $cmd = "sudo ping -c 1 " . escapeshellarg($ip);
     exec($cmd, $output, $status);
 
     if ($status === 0) {
-        echo "data: <p>$host: up</p>\n\n";
+        $result = "$ip UP";
+        $response = ['status' => 'success', 'result' => $result];
     } else {
-        echo "data: <p>$host: down</p>\n\n";
+        $result = "$ip DOWN";
+        $response = ['status' => 'error', 'result' => $result];
     }
 
-    // Flush the output buffer to send the event immediately
-    ob_flush();
-    flush();
+    // Send JSON response
+    header('Content-Type: application/json');
+    echo json_encode($response);
 }
-
-// Perform the scan for a range of IPs (modify as needed)
-$ipBase = '172.16.183';
-for ($i = 1; $i <= 255; $i++) {
-    $ip = "$ipBase.$i";
-    ping($ip);
-}
-
 ?>

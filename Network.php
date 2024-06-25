@@ -47,6 +47,27 @@
 </head>
 <body>
 <button id="startScan">Start Scan</button>
+<table>
+    <?php
+    for ($i = 0; $i < 15; $i++) {
+        echo "<tr>";
+        for ($j = 0; $j < 17; $j++) {
+            echo "<td>";
+            echo "172.16.183".(($i*$j) + 1);
+        }
+        echo "</tr>";
+    }
+    ?>
+</table>
+
 <div id="scanResults"></div>
+<style>
+    .up{
+        background: forestgreen;
+    }
+    .down{
+        background: indianred;
+    }
+</style>
 </body>
 </html>
