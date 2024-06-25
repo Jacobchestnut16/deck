@@ -104,7 +104,8 @@
         });
     </script>
 </head>
-<body onload="f()">
+<body onload="f()" background="download.jpg">
+<button><a href="index.html">Home</a></button>
 <table>
     <?php
     $ending = 0;
