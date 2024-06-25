@@ -7,10 +7,21 @@
 <body background="download.jpg">
 <table>
     <tr>
-        <td><a href="Network.php" target="iframe">Network Scan</a></td>
+        <td><a onclick="open()" href="Network.php" target="iframe">Network Scan</a></td>
     </tr>
 </table>
-<iframe name="iframe" src=""></iframe>
+<div id="frame" class="hide">
+    <button onclick="close()" id="close">Close</button>
+    <iframe name="iframe" src=""></iframe>
+</div>
+<script>
+    function open() {
+        document.getElementById('frame').className = '.show';
+    }
+    function close() {
+        document.getElementById('frame').className = '.hide';
+    }
+</script>
 <style>
     a{
         text-decoration: none;
@@ -18,9 +29,21 @@
         font-family: Rubik;
         font-size: xx-large;
     }
-    iframe{
+    div{
+        z-index: 1;
+        background: image('download.jpg');
         width: 100%;
         height: 100%;
+    }
+    iframe{
+        width: 100%;
+        height: 750px;
+    }
+    .hide{
+        display: none;
+    }
+    .show{
+        display: block;
     }
 </style>
 </body>
