@@ -6,6 +6,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
+
+
             // Function to set volume
             function setVolume(volume) {
                 $.ajax({
@@ -23,26 +25,26 @@
                 });
             }
 
-            // Function to get current volume
-            function getVolume() {
+            function fetchInitialVolume() {
                 $.ajax({
-                    url: 'BackEnd/get_volume.php',
+                    url: 'BackEnd/get_volume.php',  // Replace with your PHP script path
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        console.log('Current volume:', data.volume);
-                        // Update UI with current volume (optional)
-                        $('#currentVolume').text('Current Volume: ' + data.volume);
+                        console.log('Received data:', data);
+                        // Update slider value based on fetched volume
+                        var ret = data.volume*100
+                        console.log(ret + "this is my fetch");
+                        document.getElementById('volumeSlider').value = ret;  // Assuming volume is normalized (0.0 to 1.0)
                     },
                     error: function(xhr, status, error) {
-                        console.error('Failed to get volume:', error);
-                        // Handle error, display error message
+                        console.error('Error fetching initial volume:', error);
                     }
                 });
             }
 
-            // Initial load: Get current volume
-            getVolume();
+            // Call fetchInitialVolume when the document is ready
+            fetchInitialVolume();
 
             // Event handler for volume slider change
             $('#volumeSlider').on('input', function() {
@@ -55,6 +57,7 @@
 <body>
 <h1>Volume Control</h1>
 <div id="currentVolume"></div>
-<input type="range" id="volumeSlider" min="0" max="100" value="50" step="1">
+
+<input type="range" id="volumeSlider" min="0" max="100" value="50.5" step="1" >
 </body>
 </html>

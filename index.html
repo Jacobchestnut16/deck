@@ -4,67 +4,128 @@
     <meta charset="UTF-8">
     <title>Deck</title>
     <link rel="stylesheet" href="main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+
+            // Function to set volume
+            function setVolume(volume) {
+                $.ajax({
+                    url: 'BackEnd/set_volume.php',
+                    type: 'POST',
+                    data: { volume: volume },
+                    success: function(response) {
+                        console.log('Volume set:', response);
+                        // Update UI or display success message
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Failed to set volume:', error);
+                        // Handle error, display error message
+                    }
+                });
+            }
+
+            function fetchInitialVolume() {
+                $.ajax({
+                    url: 'BackEnd/get_volume.php',  // Replace with your PHP script path
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log('Received data:', data);
+                        // Update slider value based on fetched volume
+                        var ret = data.volume*100
+                        console.log(ret + "this is my fetch");
+                        document.getElementById('volumeSlider').value = ret;  // Assuming volume is normalized (0.0 to 1.0)
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching initial volume:', error);
+                    }
+                });
+            }
+
+            // Call fetchInitialVolume when the document is ready
+            fetchInitialVolume();
+
+            // Event handler for volume slider change
+            $('#volumeSlider').on('input', function() {
+                var volume = $(this).val() / 100; // Convert to decimal
+                setVolume(volume);
+            });
+        });
+    </script>
 </head>
 <body background="download.jpg">
+
 <table>
     <tr>
         <td>
-            <div>
-                <a href="Network.php">
-                    <img src="imgs/network-icon-black-color-in-circle-vector-20529876.jpg" alt="">
-                    <p>NetworkScan</p>
-                </a>
-            </div>
+            <table>
+                <tr>
+                    <td>
+                        <div>
+                            <a href="Network.php">
+                                <img src="imgs/network-icon-black-color-in-circle-vector-20529876.jpg" alt="">
+                                <p>NetworkScan</p>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <a href="BackEnd/youtube.php">
+                                <img src="imgs/82a1f6c92420ee6bf10e1941ebc7f00b.jpg" alt="">
+                                <p>Youtube</p>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <a href="BackEnd/opera.php">
+                                <img src="imgs/opera-browser-brand-logo-symbol-with-name-red-design-software-illustration-with-black-background-free-vector.jpg" alt="">
+                                <p>Opera</p>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <a href="BackEnd/minecraft.php">
+                                <img src="imgs/minecraft-icon-512x512-hu902m3q.png" alt="">
+                                <p>Minecraft</p>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <a href="volume.php">
+                                <img src="imgs/minecraft-icon-512x512-hu902m3q.png" alt="">
+                                <p>volume</p>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <a href="BackEnd/steam.php">
+                                <img src="imgs/steam-logo-steam-icon-free-free-vector.jpg" alt="">
+                                <p>Steam</p>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <a href="BackEnd/xbox.php">
+                                <img src="imgs/1200px-Xbox_Logo.svg.png" alt="">
+                                <p>Xbox</p>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </td>
         <td>
-            <div>
-                <a href="BackEnd/youtube.php">
-                    <img src="imgs/82a1f6c92420ee6bf10e1941ebc7f00b.jpg" alt="">
-                    <p>Youtube</p>
-                </a>
-            </div>
-        </td>
-        <td>
-            <div>
-                <a href="BackEnd/opera.php">
-                    <img src="imgs/opera-browser-brand-logo-symbol-with-name-red-design-software-illustration-with-black-background-free-vector.jpg" alt="">
-                    <p>Opera</p>
-                </a>
-            </div>
-        </td>
-        <td>
-            <div>
-                <a href="BackEnd/minecraft.php">
-                    <img src="imgs/minecraft-icon-512x512-hu902m3q.png" alt="">
-                    <p>Minecraft</p>
-                </a>
-            </div>
-        </td>
-        <td>
-            <div>
-                <a href="volume.php">
-                    <img src="imgs/minecraft-icon-512x512-hu902m3q.png" alt="">
-                    <p>volume</p>
-                </a>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <div>
-                <a href="BackEnd/steam.php">
-                    <img src="imgs/steam-logo-steam-icon-free-free-vector.jpg" alt="">
-                    <p>Steam</p>
-                </a>
-            </div>
-        </td>
-        <td>
-            <div>
-                <a href="BackEnd/xbox.php">
-                    <img src="imgs/1200px-Xbox_Logo.svg.png" alt="">
-                    <p>Xbox</p>
-                </a>
-            </div>
+            <input type="range" id="volumeSlider" min="0" max="100" value="50.5" step="1" class="volume">
+
         </td>
     </tr>
 </table>
@@ -97,6 +158,10 @@
     tr td div a p{
         margin: auto 0;
         text-align: center;
+    }
+    .volume{
+        rotate: 270deg;
+        transform: scale(3);
     }
 </style>
 </body>
