@@ -1,5 +1,5 @@
 <?php
-$host = '127.0.0.1';  // Python listener host
+$host = '172.16.183.200';  // Python listener host
 $port = 12345;        // Python listener port
 
 // Request games list from the Python listener
