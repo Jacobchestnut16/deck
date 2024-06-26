@@ -28,6 +28,6 @@ echo "Response from server: " . $response . "\n";
 
 // Close the socket
 socket_close($socket);
-header('Location: index.html');
+header('Location: ../index.html');
 exit();
 ?>
