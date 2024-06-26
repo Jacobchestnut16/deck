@@ -1,9 +1,8 @@
 <?php
 $host = '172.16.183.200';
 $port = 12345;
-
 // Command to execute
-$command = 'powershell.exe -Command "Start-Process \'C:\\Users\\Jacob Chestnut\\AppData\\Local\\Programs\\Opera\\opera.exe\' \'https://www.youtube.com\'"';
+$command = 'powershell.exe -Command "Start-Process \'C:\\Program Files (x86)\\Overwolf\\OverwolfLauncher.exe\'"';
 
 // Create a socket
 $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);

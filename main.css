@@ -4,3 +4,26 @@ a{
     font-family: Rubik;
     font-size: xx-large;
 }
+body{
+    width: 100%;
+}
+tr{
+    width: 100%;
+}
+tr td{
+    width: 180px;
+    border: rgba(0, 190, 255, 0.3) 1px solid;
+}
+tr td div{
+    width: 100%;
+}
+tr td div a img{
+    width: 150px;
+    position: relative;
+    margin: 15px;
+    box-shadow: dimgrey 2px 2px 20px;
+}
+tr td div a p{
+    margin: auto 0;
+    text-align: center;
+}
