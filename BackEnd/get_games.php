@@ -3,7 +3,7 @@ $host = '172.16.183.200';  // Python listener host
 $port = 12345;        // Python listener port
 
 // Request games list from the Python listener
-$message = 'scan_games:C:\\XboxGames';
+$message = 'scan_games|C:\\XboxGames';
 
 $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 if ($socket === false) {
