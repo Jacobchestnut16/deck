@@ -1,5 +1,5 @@
 <?php
-$host = 'windows_machine_ip';
+$host = '172.16.183.200';
 $port = 12345;
 
 $command = "get_volume";
