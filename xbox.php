@@ -34,25 +34,34 @@
             });
         }
 
+
         $(document).ready(function() {
             $.ajax({
                 url: 'BackEnd/get_games.php',
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    var gamesDiv = $('#games');
-                    gamesDiv.empty();
-                    data.forEach(function(game) {
-                        document.getElementById('gameTable').append('');
-                        var gameDiv = $('<div class="game"></div>');
+                    var gameTable = $('#gameTable');
+                    var gameRow = $('<tr></tr>');
+                    data.forEach(function(game, index) {
+                        if (index % 4 === 0 && index !== 0) {
+                            gameTable.append(gameRow);
+                            gameRow = $('<tr></tr>');
+                        }
+
+                        var gameCell = $('<td></td>');
+                        var gameDiv = $('<div></div>');
+                        var gameLink = $('<a></a>').attr('href', '#').attr('onclick', 'launchGame("' + game.exe_path + '"); return false;');
                         var gameLogo = $('<img>').attr('src', game.logo_path);
-                        var gameName = $('<div></div>').text(game.name);
-                        var launchButton = $('<button>Launch</button>').on('click', function() {
-                            launchGame(game.exe_path);
-                        });
-                        gameDiv.append(gameLogo, gameName, launchButton);
-                        gamesDiv.append(gameDiv);
+                        var gameName = $('<p></p>').text(game.name);
+
+                        gameLink.append(gameLogo);
+                        gameLink.append(gameName);
+                        gameDiv.append(gameLink);
+                        gameCell.append(gameDiv);
+                        gameRow.append(gameCell);
                     });
+                    gameTable.append(gameRow); // Append the last row if it wasn't appended yet
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching games:', error);
