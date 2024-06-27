@@ -37,7 +37,7 @@
 
         $(document).ready(function() {
             $.ajax({
-                url: 'BackEnd/get_games.php',
+                url: 'BackEnd/get_steam_games.php',
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {

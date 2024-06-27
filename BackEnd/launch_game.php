@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "socket_connect() failed: " . socket_strerror(socket_last_error($socket)) . "\n";
         exit;
     }
-
+    $exePath = 'launch_game'.$exePath;
     // Send the executable path to the listener
     socket_write($socket, $exePath, strlen($exePath));
 
