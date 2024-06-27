@@ -26,7 +26,7 @@
                 type: 'POST',
                 data: { exe_path: exePath },
                 success: function(response) {
-                    alert(response);
+                    console.log(response);
                 },
                 error: function(xhr, status, error) {
                     console.error('Error launching game:', error);
