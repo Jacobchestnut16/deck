@@ -71,7 +71,7 @@
     </script>
 </head>
 <body>
-<h1>Xbox Games</h1>
+<h1>Steam Games</h1>
 <div id="games"></div>
 <table id="gameTable">
     <tr>
