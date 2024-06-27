@@ -43,6 +43,7 @@
                     var gamesDiv = $('#games');
                     gamesDiv.empty();
                     data.forEach(function(game) {
+                        document.getElementById('gameTable').append('');
                         var gameDiv = $('<div class="game"></div>');
                         var gameLogo = $('<img>').attr('src', game.logo_path);
                         var gameName = $('<div></div>').text(game.name);
@@ -63,7 +64,7 @@
 <body>
 <h1>Xbox Games</h1>
 <div id="games"></div>
-<table>
+<table id="gameTable">
     <tr>
         <td><a href="index.html">Return</a></td>
     </tr>
