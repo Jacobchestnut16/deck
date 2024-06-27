@@ -63,5 +63,49 @@
 <body>
 <h1>Xbox Games</h1>
 <div id="games"></div>
+<table>
+    <tr>
+        <td><a href="index.html">Return</a></td>
+    </tr>
+</table>
+
+<style>
+    *{
+        overflow: hidden;
+
+    }
+    a{
+        text-decoration: none;
+        color: slategray;
+        font-family: Rubik;
+        font-size: medium;
+    }
+    body{
+        width: 100%;
+        background: url("imgs/Untitled_Artwork.png");
+        background-repeat: no-repeat;
+        background-color: black;
+    }
+    tr{
+        width: 100%;
+    }
+    tr td{
+        width: 100px;
+        background-color: rgba(0,0,0,15%);
+    }
+    tr td div{
+        width: 100%;
+    }
+    tr td div a img{
+        width: 70px;
+        position: relative;
+        margin: 15px;
+    }
+    tr td div a p{
+        margin: auto 0;
+        text-align: center;
+    }
+
+    </style>
 </body>
 </html>
