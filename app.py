@@ -17,7 +17,7 @@ class WebAppViewer(QMainWindow):
         self.showFullScreen()
 
         def eventFilter(self, obj, event):
-            if event.type() == QEvent.KeyPress and event.key() == Qt.Key_Q and event.modifiers() & Qt.ControlModifier:
+            if event.key() == Qt.Key_Q and event.modifiers() & Qt.ControlModifier:
                 # Handle Ctrl + Q to quit the application
                 self.close_application()
                 return True
@@ -25,7 +25,7 @@ class WebAppViewer(QMainWindow):
 
         def close_application(self):
             # Clean up resources and exit the application
-            QApplication.instance().quit()
+            QApplication.quit()
 
 def update_and_launch_webapp():
     # Step 1: Delete existing content in /var/www/html/deck/
