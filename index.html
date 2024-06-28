@@ -113,10 +113,24 @@
         </tr>
     </table>
 
+    <div class="lock">
+        <a href="BackEnd/lock.php">
+            <img src="imgs/1560475-200.png" alt="">
+            <p>Lock</p>
+        </a>
+
+    </div>
     <div class="sleep">
         <a href="BackEnd/sleep.php">
             <img src="imgs/sleep.png" alt="">
             <p>Sleep</p>
+        </a>
+
+    </div>
+    <div class="admin">
+        <a href="#">
+            <img src="imgs/administrators-11.png" alt="">
+            <p>Settings</p>
         </a>
 
     </div>
@@ -163,7 +177,7 @@
         width: 400px;  /* Adjust width to your preference */
         height: 25px;  /* Adjust height to your preference */
         position: absolute;
-        right: 50px;
+        right: 145px;
         top: 25px;
         transform-origin: top right;
         transform: rotate(270deg);
@@ -172,23 +186,64 @@
 
     .sleep{
         background: slategray;
-        width: 100px;
-        height: 100px;
+        width: 65px;
+        height: 65px;
         margin: 15px;
         position: absolute;
-        right: 150px;
+        right: 10px;
         top: 50px;
     }
     .sleep a img{
-        width: 70px;
+        width: 40px;
         position: relative;
-        margin-left: 15px;
+        margin-left: 10px;
     }
-
     .sleep a p{
         color: black;
         margin: auto 0;
         text-align: center;
+    }
+
+    .lock{
+        background: slategray;
+        width: 65px;
+        height: 65px;
+        margin: 15px;
+        position: absolute;
+        right: 10px;
+        top: 120px;
+    }
+    .lock a img{
+        width: 41px;
+        position: relative;
+        margin-left: 12px;
+    }
+    .lock a p{
+        color: black;
+        margin: auto 0;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .admin{
+        background: slategray;
+        width: 65px;
+        height: 65px;
+        margin: 15px;
+        position: absolute;
+        right: 10px;
+        top: 190px;
+    }
+    .admin a img{
+        width: 41px;
+        position: relative;
+        margin-left: 12px;
+    }
+    .admin a p{
+        color: black;
+        margin: auto 0;
+        text-align: center;
+        padding-bottom: 10px;
     }
 </style>
 </body>
