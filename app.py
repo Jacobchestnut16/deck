@@ -1,7 +1,7 @@
 import os
 import subprocess
 import sys
-from PyQt5.QtCore import QUrl, Qt
+from PyQt5.QtCore import QUrl, Qt, QEvent
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 
@@ -16,15 +16,16 @@ class WebAppViewer(QMainWindow):
         self.browser.load(QUrl(url))
         self.showFullScreen()
 
-        # Create Quit Action
-        quit_action = QAction("&Quit", self)
-        quit_action.setShortcut("Ctrl+Q")
-        quit_action.setStatusTip("Quit Application")
-        quit_action.triggered.connect(self.close_application)
+        def eventFilter(self, obj, event):
+            if event.type() == QEvent.KeyPress and event.key() == Qt.Key_Q and event.modifiers() & Qt.ControlModifier:
+                # Handle Ctrl + Q to quit the application
+                self.close_application()
+                return True
+            return super().eventFilter(obj, event)
 
-        # Add Quit Action to Menu or Toolbar (Optional)
-        self.menuBar().addAction(quit_action)
-
+        def close_application(self):
+            # Clean up resources and exit the application
+            QApplication.instance().quit()
     def close_application(self):
         # Clean up resources and exit the application
         QApplication.instance().quit()
