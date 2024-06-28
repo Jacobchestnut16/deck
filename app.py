@@ -25,7 +25,7 @@ def update_and_launch_webapp():
 
     # Step 2: Clone Git repository
     try:
-        subprocess.run(['git', 'clone', 'https://github.com/yourusername/yourwebapp.git', deck_path], check=True)
+        subprocess.run(['git', 'clone', 'https://github.com/Jacobchestnut16/deck.git', deck_path], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error cloning repository: {e}")
         return
