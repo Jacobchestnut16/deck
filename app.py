@@ -33,14 +33,14 @@ def update_and_launch_webapp():
     # Step 1: Delete existing content in /var/www/html/deck/
     deck_path = '/var/www/html/deck/'
     try:
-        subprocess.run(['rm', '-rf', deck_path], check=True)
+        subprocess.run(['sudo','rm', '-rf', deck_path], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error deleting {deck_path}: {e}")
         return
 
     # Step 2: Clone Git repository
     try:
-        subprocess.run(['git', 'clone', 'https://github.com/Jacobchestnut16/deck.git', deck_path], check=True)
+        subprocess.run(['sudo','git', 'clone', 'https://github.com/Jacobchestnut16/deck.git', deck_path], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error cloning repository: {e}")
         return
