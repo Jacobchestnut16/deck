@@ -2,7 +2,9 @@ import os
 import subprocess
 import sys
 from PyQt5.QtCore import QUrl, Qt
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWebEngineView
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWebEngineWidgets import QWebEngineView
+
 
 class WebAppViewer(QMainWindow):
     def __init__(self, url):
@@ -13,6 +15,19 @@ class WebAppViewer(QMainWindow):
         self.setCentralWidget(self.browser)
         self.browser.load(QUrl(url))
         self.showFullScreen()
+
+        # Create Quit Action
+        quit_action = QAction("&Quit", self)
+        quit_action.setShortcut("Ctrl+Q")
+        quit_action.setStatusTip("Quit Application")
+        quit_action.triggered.connect(self.close_application)
+
+        # Add Quit Action to Menu or Toolbar (Optional)
+        self.menuBar().addAction(quit_action)
+
+    def close_application(self):
+        # Clean up resources and exit the application
+        QApplication.instance().quit()
 
 def update_and_launch_webapp():
     # Step 1: Delete existing content in /var/www/html/deck/
