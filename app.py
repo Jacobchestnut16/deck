@@ -26,9 +26,6 @@ class WebAppViewer(QMainWindow):
         def close_application(self):
             # Clean up resources and exit the application
             QApplication.instance().quit()
-        def close_application(self):
-            # Clean up resources and exit the application
-            QApplication.instance().quit()
 
 def update_and_launch_webapp():
     # Step 1: Delete existing content in /var/www/html/deck/
