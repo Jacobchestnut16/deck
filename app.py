@@ -46,7 +46,7 @@ def update_and_launch_webapp():
 
 
     try:
-        subprocess.run(['sudo','cp',deck_path+'app.py','~/'], check=True)
+        subprocess.run(['sudo','cp',deck_path+'app.py','/home/jchestnut'], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error cloning repository: {e}")
         return
