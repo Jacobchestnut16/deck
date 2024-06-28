@@ -43,11 +43,7 @@ def update_and_launch_webapp():
         print(f"Error cloning repository: {e}")
         return
 
-    try:
-        subprocess.run(['sudo','rm','~/app.py'], check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"Error cloning repository: {e}")
-        return
+
 
     try:
         subprocess.run(['sudo','cp',deck_path+'app.py','~/'], check=True)
