@@ -349,7 +349,7 @@
         function resetTimer() {
             clearTimeout(timeout);
             hideBlackout();
-            timeout = setTimeout(showBlackout, 3600000); // 1 hour = 3600000 milliseconds
+            timeout = setTimeout(showBlackout, 5000); // 1 hour = 3600000 milliseconds
         }
 
         window.onload = resetTimer;
