@@ -129,13 +129,13 @@
         </tr>
     </table>
 
-    <div class="lock">
-        <a href="BackEnd/lock.php">
-            <img src="imgs/1560475-200.png" alt="">
-            <p>Lock</p>
-        </a>
+<!--    <div class="lock">-->
+<!--        <a href="BackEnd/lock.php">-->
+<!--            <img src="imgs/1560475-200.png" alt="">-->
+<!--            <p>Lock</p>-->
+<!--        </a>-->
 
-    </div>
+<!--    </div>-->
     <div class="sleep">
         <a href="BackEnd/sleep.php">
             <img src="imgs/sleep.png" alt="">
@@ -156,31 +156,98 @@
     <div class="widget">
         <table>
             <tr>
-                <td>Temperature</td>
                 <td>
-                    <div class="data" id="temperature"></div>
+                    <div class="DateTime">
+                        <table>
+                            <tr>
+                                <td><div class="data" id="time"></div></td>
+                                <td><div class="data" id="date"></div></td>
+                            </tr>
+                        </table>
+                    </div>
                 </td>
             </tr>
             <tr>
-                <td>Condition</td>
                 <td>
-                    <div class="data" id="prediction"></div>
-                </td>
-            </tr>
-            <tr>
-                <td>Feels Like</td>
-                <td>
-                    <div class="data" id="heatIndex"></div>
-                </td>
-            </tr>
-            <tr>
-                <td>Dew Point</td>
-                <td>
-                    <div class="data" id="dewPoint"></div>
+                    <div class="slideshow-container">
+                        <div class="mySlides fade">
+                            <table>
+                                <tr>
+                                    <td>Temperature</td>
+                                    <td>
+                                        <div class="data" id="temperature"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Humidity</td>
+                                    <td>
+                                        <div class="data" id="humidity"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="mySlides fade">
+                            <table>
+                                <tr>
+                                    <td>Condition</td>
+                                    <td>
+                                        <div class="data" id="prediction"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="mySlides fade">
+                            <table>
+                                <tr>
+                                    <td>Feels Like</td>
+                                    <td>
+                                        <div class="data" id="heatIndex"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Dew Point</td>
+                                    <td>
+                                        <div class="data" id="dewPoint"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+                        <a class="next" onclick="changeSlide(1)">&#10095;</a>
+                    </div>
                 </td>
             </tr>
         </table>
     </div>
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function changeSlide(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex-1].style.display = "block";
+        }
+
+        setInterval(function() {
+            changeSlide(1);
+        }, 20000); // Change image every 5 seconds
+    </script>
 
     <script>
         // Replace with your actual Read API Key and Channel ID
@@ -234,7 +301,7 @@
 
             // Display the data
             document.getElementById('temperature').innerHTML = `${temperatureF.toFixed(2)} °F`;
-            // document.getElementById('humidity').innerText = `${feed.field2} %`;
+            document.getElementById('humidity').innerText = `${feed.field2} %`;
             // document.getElementById('light').innerText = `Light: ${feed.field3} lux`;
             // document.getElementById('atmosphere').innerText = `Atmosphere: ${feed.field4} hPa`;
 
@@ -250,14 +317,70 @@
         }
         fetchData()
         setInterval(fetchData, 180000);
+
+        function setTimeDate() {
+            const date = new Date();
+
+            const dateOptions = { month: 'long', day: '2-digit', year: 'numeric' };
+            const formattedDate = date.toLocaleDateString('en-US', dateOptions);
+
+            const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+            const formattedTime = date.toLocaleTimeString('en-US', timeOptions);
+
+            document.getElementById('time').innerText = `${formattedTime}`;
+            document.getElementById('date').innerText = `${formattedDate}`;
+        }
+        setTimeDate()
+        setInterval(setTimeDate, 1500)
     </script>
 
+    <div id="blackout" class="blackout"></div>
+    <script>
+        let timeout;
 
-</table>
+        function showBlackout() {
+            document.getElementById('blackout').classList.add('active');
+        }
+
+        function hideBlackout() {
+            document.getElementById('blackout').classList.remove('active');
+        }
+
+        function resetTimer() {
+            clearTimeout(timeout);
+            hideBlackout();
+            timeout = setTimeout(showBlackout, 3600000); // 1 hour = 3600000 milliseconds
+        }
+
+        window.onload = resetTimer;
+        window.onmousemove = resetTimer;
+        window.onkeypress = resetTimer;
+        window.ontouchstart = resetTimer; // For touch devices
+    </script>
+
 <style>
+    .blackout{
+        opacity: 0;
+        z-index: 999;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: opacity 1s ease-in-out;
+    }
+
+    .blackout.active {
+        display: block;
+        opacity: 1;
+    }
+    .DateTime{
+        color: whitesmoke;
+    }
     *{
         overflow: hidden;
-
+        z-index: 1;
     }
     a{
         text-decoration: none;
@@ -370,6 +493,68 @@
         position: absolute;
         bottom: 10px;
         left: 10px;
+        width: 300px;
+        /*border: green 1px solid;*/
+        max-height: 15%;
+    }
+    .widget table{
+        position: relative;
+        top: 0;
+        right: 0;
+        width: 100%;
+    }
+    .widget table tr{
+        width: 100%;
+    }
+    .widget table tr td{
+
+    }
+
+
+    .mySlides{
+    }
+    .slideshow-container {
+        max-width: 1000px;
+        position: relative;
+        margin: auto;
+    }
+     /*Hide the images by default */
+    .mySlides {
+        display: none;
+    }
+
+    .fade {
+        animation-name: fade;
+        animation-duration: 1.5s;
+    }
+    .prev, .next {
+        cursor: pointer;
+        position: relative;
+        width: auto;
+        height: 50%;
+        padding: 16px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+    }
+    .next {
+        position: relative;
+        right: -220px;
+        border-radius: 3px 0 0 3px;
+    }
+    .prev{
+        display: none;
+    }
+    .next{
+        display: none;
+    }
+
+    @keyframes fade {
+        from {opacity: .4}
+        to {opacity: 1}
     }
 </style>
 </body>
