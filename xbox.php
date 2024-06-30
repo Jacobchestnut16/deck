@@ -79,7 +79,166 @@
     </tr>
 </table>
 
+
+<div class="sleep">
+    <a href="BackEnd/sleep.php">
+        <img src="imgs/sleep.png" alt="">
+        <p>Sleep</p>
+    </a>
+</div>
+<div class="admin">
+    <a href="#">
+        <img src="imgs/administrators-11.png" alt="">
+        <p>Settings</p>
+    </a>
+</div>
+<input type="range" id="volumeSlider" min="0" max="100" value="50.5" step="1" class="volume">
+<div class="widget">
+    <table>
+        <tr>
+            <td>
+                <div class="DateTime">
+                    <table>
+                        <tr>
+                            <td><div class="data" id="time">MMMM DD, yyyy</div></td>
+                            <td><div class="data" id="date">hh:mm aa</div></td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<script>
+    function setTimeDate() {
+        const date = new Date();
+
+        const dateOptions = { month: 'long', day: '2-digit', year: 'numeric' };
+        const formattedDate = date.toLocaleDateString('en-US', dateOptions);
+
+        const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+        const formattedTime = date.toLocaleTimeString('en-US', timeOptions);
+
+        document.getElementById('time').innerText = `${formattedTime}`;
+        document.getElementById('date').innerText = `${formattedDate}`;
+    }
+    setTimeDate()
+    setInterval(setTimeDate, 1500)
+</script>
+<div id="blackout" class="blackout"></div>
+<script>
+    let timeout;
+
+    function showBlackout() {
+        document.getElementById('blackout').classList.add('active');
+    }
+
+    function hideBlackout() {
+        document.getElementById('blackout').classList.remove('active');
+    }
+
+    function resetTimer() {
+        clearTimeout(timeout);
+        hideBlackout();
+        timeout = setTimeout(showBlackout, 3600000); // 1 hour = 3600000 milliseconds
+    }
+
+    window.onload = resetTimer;
+    window.onmousemove = resetTimer;
+    window.onkeypress = resetTimer;
+    window.ontouchstart = resetTimer; // For touch devices
+</script>
 <style>
+    .widget * {
+        color: whitesmoke;
+    }
+    .widget{
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        width: 300px;
+        /*border: green 1px solid;*/
+        max-height: 15%;
+    }
+    .widget table{
+        position: relative;
+        top: 0;
+        right: 0;
+        width: 100%;
+    }
+    .widget table tr {
+        width: 100%;
+    }
+    .volume {
+        width: 400px;  /* Adjust width to your preference */
+        height: 25px;  /* Adjust height to your preference */
+        position: absolute;
+        right: 145px;
+        top: 25px;
+        transform-origin: top right;
+        transform: rotate(270deg);
+        border-radius: 15px;  /* Adjust border radius as needed */
+    }
+    .sleep{
+        background: slategray;
+        width: 65px;
+        height: 65px;
+        margin: 15px;
+        position: absolute;
+        right: 10px;
+        top: 50px;
+    }
+    .sleep a img{
+        width: 40px;
+        position: relative;
+        margin-left: 10px;
+    }
+    .sleep a p{
+        color: black;
+        margin: auto 0;
+        text-align: center;
+    }
+    .lock{
+        background: slategray;
+        width: 65px;
+        height: 65px;
+        margin: 15px;
+        position: absolute;
+        right: 10px;
+        top: 120px;
+    }
+    .lock a img{
+        width: 41px;
+        position: relative;
+        margin-left: 12px;
+    }
+    .lock a p{
+        color: black;
+        margin: auto 0;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+    .admin{
+        background: slategray;
+        width: 65px;
+        height: 65px;
+        margin: 15px;
+        position: absolute;
+        right: 10px;
+        top: 190px;
+    }
+    .admin a img{
+        width: 41px;
+        position: relative;
+        margin-left: 12px;
+    }
+    .admin a p{
+        color: black;
+        margin: auto 0;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
     *{
         overflow: hidden;
 
