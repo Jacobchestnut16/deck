@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Widget</title>
+
+</head>
+<body>
+<div>
+    <table>
+        <tr><td><a href="index.html">Home</a></td></tr>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>Temperature</td>
+                        <td>
+                            <div class="data" id="temperature"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Feels Like</td>
+                        <td>
+                            <div class="data" id="heatIndex"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Humidity</td>
+                        <td>
+                            <div class="data" id="humidity"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Dew Point</td>
+                        <td>
+                            <div class="data" id="dewPoint"></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td>Condition</td>
+                        <td>
+                            <div class="data" id="prediction"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Light</td>
+                        <td>
+                            <div class="data" id="light"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Atmosphere Pressure</td>
+                        <td>
+                            <div class="data" id="atmosphere"></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    // Replace with your actual Read API Key and Channel ID
+    const API_KEY = 'AS0MHYX8GWFNUS2X';
+    const CHANNEL_ID = '2587051';
+    function calculateHeatIndex(temperatureC, humidity) {
+        const tempF = (temperatureC * 9/5) + 32; // Convert Celsius to Fahrenheit
+        const heatIndex = -42.379 + 2.04901523 * tempF + 10.14333127 * humidity
+            - 0.22475541 * tempF * humidity - 6.83783 * Math.pow(10, -3) * Math.pow(tempF, 2)
+            - 5.481717 * Math.pow(10, -2) * Math.pow(humidity, 2)
+            + 1.22874 * Math.pow(10, -3) * Math.pow(tempF, 2) * humidity
+            + 8.5282 * Math.pow(10, -4) * tempF * Math.pow(humidity, 2)
+            - 1.99 * Math.pow(10, -6) * Math.pow(tempF, 2) * Math.pow(humidity, 2);
+        return heatIndex; // Convert back to Celsius
+    }
+
+    function calculateDewPoint(tempC, humidity) {
+        const a = 17.27;
+        const b = 237.7;
+        const alpha = ((a * tempC) / (b + tempC)) + Math.log(humidity / 100);
+        return (b * alpha) / (a - alpha);
+    }
+
+    function predictWeather(tempC, humidity, light, pressure) {
+        const tempF = (tempC * 9/5) + 32; // Convert Celsius to Fahrenheit
+        let prediction = 'Weather is stable';
+
+        if (pressure < 1000 && humidity > 80) {
+            prediction = 'High chance of rain';
+        } else if (pressure < 1000 && humidity > 90 && light < 1000) {
+            prediction = 'Storm likely';
+        } else if (pressure > 1020 && humidity < 50) {
+            prediction = 'Clear weather';
+        }
+
+        return prediction;
+    }
+
+    // Fetch data from ThinkSpeak
+    async function fetchData() {
+        const response = await fetch(`https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?api_key=${API_KEY}&results=1`);
+        const data = await response.json();
+        const feed = data.feeds[0];
+
+        const temperatureC = parseFloat(feed.field1.split(' ')[0]);
+
+
+        // Convert temperature from Celsius to Fahrenheit
+        const temperatureF = (temperatureC * 9/5) + 32;
+
+
+        // Display the data
+        document.getElementById('temperature').innerHTML = `${temperatureF.toFixed(2)} °F`;
+        document.getElementById('humidity').innerText = `${feed.field2} %`;
+        document.getElementById('light').innerText = `${feed.field3} lux`;
+        document.getElementById('atmosphere').innerText = `${feed.field4} hPa`;
+
+        var heatIndex = calculateHeatIndex(temperatureC, feed.field2);
+        document.getElementById('heatIndex').innerText = `${heatIndex.toFixed(2)} °F`;
+
+        var dewPoint = calculateDewPoint(temperatureC, feed.field2);
+        document.getElementById('dewPoint').innerText = `${dewPoint.toFixed(2)}`;
+
+        var prediction = predictWeather(temperatureC, feed.field2, feed.field3, feed.field4)
+        document.getElementById('prediction').innerText = `${prediction}`;
+
+    }
+
+
+
+
+
+    // Call the function to fetch and display data
+    fetchData();
+</script>
+<style>
+    *{
+        overflow: hidden;
+        color: whitesmoke;
+        text-align: center;
+        font-size: 30px;
+    }
+    a{
+        text-decoration: none;
+        color: slategray;
+        font-family: Rubik;
+        font-size: xx-large;
+        position: relative;
+        left: -100px;
+    }
+    body{
+        width: 100%;
+        background: url("imgs/Untitled_Artwork.png");
+        background-repeat: no-repeat;
+        background-color: black;
+    }
+    table{
+        width: 100%;
+        margin: auto 0;
+    }
+    tr{
+        width: 100%;
+    }
+    tr td{
+        width: 100px;
+    }
+    tr td table{
+        position: relative;
+        top: 0;
+        margin: 0;
+        padding: 0;
+    }
+    tr td table tr td{
+        background-color: rgba(0,0,0,15%);
+        border: rgba(0,0,0,30%) solid 1px;
+    }
+    tr td div{
+        width: 100%;
+    }
+    tr td div a img{
+        width: 70px;
+        position: relative;
+        margin: 15px;
+    }
+    tr td div a p{
+        margin: auto 0;
+    }
+</style>
+</body>
+</html>
