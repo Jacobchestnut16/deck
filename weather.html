@@ -8,7 +8,7 @@
 <body>
 <div>
     <table>
-        <tr><td><a href="index.html">Home</a></td></tr>
+        <tr class="sml"><td  class="sml"><a  class="sml" href="index.html">Home</a></td></tr>
         <tr>
             <td>Condition</td>
             <td>
@@ -29,24 +29,20 @@
         </tr>
         <tr>
             <td>
-                <table>
-                    <tr>
-                        <td>Humidity</td>
-                        <td>
-                            <div class="data" id="humidity"></div>
-                        </td>
-                    </tr>
-                </table>
+                <section>
+                    <div>Humidity</div>
+                    <div>
+                        <div class="data" id="humidity"></div>
+                    </div>
+                </section>
             </td>
             <td>
-                <table>
-                    <tr>
-                        <td>Dew Point</td>
-                        <td>
-                            <div class="data" id="dewPoint"></div>
-                        </td>
-                    </tr>
-                </table>
+                <section>
+                    <div>Dew Point</div>
+                    <div>
+                        <div class="data" id="dewPoint"></div>
+                    </div>
+                </section>
             </td>
         </tr>
         <tr>
@@ -149,7 +145,9 @@
     *{
         color: whitesmoke;
         text-align: center;
-        font-size: 25px;
+        font-size: 20px;
+        padding: 0;
+        margin: 0;
     }
     body{
         width: 100%;
@@ -163,35 +161,33 @@
         background-color: rgba(0,0,0,0%);
         border: rgba(0,0,0,0%) solid 1px;
     }
-    div{
-    }
-    div table{
+    table{
         width: 800px;
         height: 480px;
         margin: auto 0;
         background: url("imgs/Untitled_Artwork.png");
         background-repeat: no-repeat;
     }
-    table * table{
-        background: none;
-        width: 400px;
-        height: auto;
-        margin: auto 0;
-    }
+
     table tr{
         width: 800px;
-        height: 16px;
     }
     table tr td{
         width: 400px;
+        height: 15px;
     }
-    table * table tr{
+    table tr td section{
         width: 380px;
-        height: 16px;
+        align-content: center;
+        align-items: center;
+        text-align: center;
     }
-    table tr * td{
-        width: 200px;
+    table tr td section div{
+        width: 150px;
+        float: left;
+        margin-left: 10px;
     }
+
 </style>
 </body>
 </html>
