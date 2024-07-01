@@ -9,27 +9,38 @@
 <div>
     <table>
         <tr><td><a href="index.html">Home</a></td></tr>
+
+        <tr>
+            <td>Condition</td>
+            <td>
+                <div class="data" id="prediction"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>Temperature</td>
+            <td>
+                <div class="data" id="temperature"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>Feels Like</td>
+            <td>
+                <div class="data" id="heatIndex"></div>
+            </td>
+        </tr>
         <tr>
             <td>
                 <table>
-                    <tr>
-                        <td>Temperature</td>
-                        <td>
-                            <div class="data" id="temperature"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Feels Like</td>
-                        <td>
-                            <div class="data" id="heatIndex"></div>
-                        </td>
-                    </tr>
                     <tr>
                         <td>Humidity</td>
                         <td>
                             <div class="data" id="humidity"></div>
                         </td>
                     </tr>
+                </table>
+            </td>
+            <td>
+                <table>
                     <tr>
                         <td>Dew Point</td>
                         <td>
@@ -38,27 +49,17 @@
                     </tr>
                 </table>
             </td>
+        </tr>
+        <tr>
+            <td>Light</td>
             <td>
-                <table>
-                    <tr>
-                        <td>Condition</td>
-                        <td>
-                            <div class="data" id="prediction"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Light</td>
-                        <td>
-                            <div class="data" id="light"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Atmosphere Pressure</td>
-                        <td>
-                            <div class="data" id="atmosphere"></div>
-                        </td>
-                    </tr>
-                </table>
+                <div class="data" id="light"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>Atmosphere Pressure</td>
+            <td>
+                <div class="data" id="atmosphere"></div>
             </td>
         </tr>
     </table>
@@ -68,6 +69,8 @@
     // Replace with your actual Read API Key and Channel ID
     const API_KEY = 'AS0MHYX8GWFNUS2X';
     const CHANNEL_ID = '2587051';
+
+    var pressure = 0;
     function calculateHeatIndex(temperatureC, humidity) {
         const tempF = (temperatureC * 9/5) + 32; // Convert Celsius to Fahrenheit
         const heatIndex = -42.379 + 2.04901523 * tempF + 10.14333127 * humidity
@@ -88,7 +91,7 @@
 
     function predictWeather(tempC, humidity, light, pressure) {
         const tempF = (tempC * 9/5) + 32; // Convert Celsius to Fahrenheit
-        let prediction = 'Weather is stable';
+        var prediction = 'Weather is stable';
 
         if (pressure < 1000 && humidity > 80) {
             prediction = 'High chance of rain';
@@ -96,6 +99,10 @@
             prediction = 'Storm likely';
         } else if (pressure > 1020 && humidity < 50) {
             prediction = 'Clear weather';
+        } else if (pressure < 1020 && humidity > 50 && tempF < 68){
+            prediction = 'Cool'
+        } else if (pressure < 1020 && humidity > 50 && tempF > 68){
+            prediction = 'Muggy & Hot'
         }
 
         return prediction;
@@ -106,6 +113,7 @@
         const response = await fetch(`https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?api_key=${API_KEY}&results=1`);
         const data = await response.json();
         const feed = data.feeds[0];
+        pressure = feed.field3 / 100;
 
         const temperatureC = parseFloat(feed.field1.split(' ')[0]);
 
@@ -118,7 +126,7 @@
         document.getElementById('temperature').innerHTML = `${temperatureF.toFixed(2)} °F`;
         document.getElementById('humidity').innerText = `${feed.field2} %`;
         document.getElementById('light').innerText = `${feed.field3} lux`;
-        document.getElementById('atmosphere').innerText = `${feed.field4} hPa`;
+        document.getElementById('atmosphere').innerText = `${pressure} hPa`;
 
         var heatIndex = calculateHeatIndex(temperatureC, feed.field2);
         document.getElementById('heatIndex').innerText = `${heatIndex.toFixed(2)} °F`;
@@ -126,7 +134,7 @@
         var dewPoint = calculateDewPoint(temperatureC, feed.field2);
         document.getElementById('dewPoint').innerText = `${dewPoint.toFixed(2)}`;
 
-        var prediction = predictWeather(temperatureC, feed.field2, feed.field3, feed.field4)
+        var prediction = predictWeather(temperatureC, feed.field2, feed.field3, pressure)
         document.getElementById('prediction').innerText = `${prediction}`;
 
     }
@@ -175,9 +183,13 @@
         margin: 0;
         padding: 0;
     }
-    tr td table tr td{
+    tr{
         background-color: rgba(0,0,0,15%);
         border: rgba(0,0,0,30%) solid 1px;
+    }
+    tr tr{
+        background-color: rgba(0,0,0,0%);
+        border: rgba(0,0,0,0%) solid 1px;
     }
     tr td div{
         width: 100%;
